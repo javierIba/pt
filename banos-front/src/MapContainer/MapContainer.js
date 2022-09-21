@@ -1,10 +1,10 @@
 import { useLoadScript } from '@react-google-maps/api';
 import './MapContainer.css'
-import Map from "./../Map/Map";
+import Map from "./Map/Map";
 
 const MapContainer = () => {
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyBo6HyS4zH36dLxSCympnE3bOfUD1TCOuM",
+        googleMapsApiKey: process.env.REACT_APP_API_KEY_GOOGLE_MAPS,
     })
     
 

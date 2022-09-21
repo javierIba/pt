@@ -1,0 +1,38 @@
+import { useState, useEffect } from 'react';
+import { GoogleMap, Marker } from '@react-google-maps/api';
+import './Map.css'
+import BathCluster from './BathCluster/BathCluster';
+import icons from '../../icons/Icons'
+export default function Map() {
+    const [gpsData, setGpsData] = useState(
+        {
+            lat: -33.044726,
+            lng: -71.6148218
+        }
+    );
+    useEffect(() => {
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                setGpsData({ lat: position.coords.latitude, lng: position.coords.longitude });
+            });
+        } else {
+            console.log("Gps no aceptado")
+        }
+    },[]);
+
+
+
+    return <GoogleMap zoom={16} center={gpsData} mapContainerClassName="map">
+        <Marker position={gpsData} animation={window.google.maps.Animation.DROP} icon={
+    {path:icons.iconPerson,
+    fillColor: "gold",
+    fillOpacity: 0.9,
+    scale: 0.1,
+    strokeColor: "blue",
+    strokeWeight: 2}
+  } 
+  
+  />
+  <BathCluster />
+    </GoogleMap>
+}
