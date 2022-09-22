@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GoogleMap, Marker } from '@react-google-maps/api';
+import { GoogleMap, Marker ,DistanceMatrixService,DirectionsService} from '@react-google-maps/api';
 import './Map.css'
 import BathCluster from './BathCluster/BathCluster';
 import icons from '../../icons/Icons'
@@ -34,5 +34,26 @@ export default function Map() {
   
   />
   <BathCluster />
+
+
+  <DistanceMatrixService
+ options={{
+           destinations: [gpsData],
+           origins: [{
+            lat: -34.044726,
+            lng: -71.6148218
+        }],
+           travelMode: "DRIVING",
+         }}
+ callback = {(response) => {console.log(response)}}
+/>
+
+{/* <DirectionsService
+options={
+   ,
+    origin: gpsData,
+    travelMode: "WALKING"}>
+
+</DirectionsService> */}
     </GoogleMap>
 }
