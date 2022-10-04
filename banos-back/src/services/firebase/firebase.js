@@ -14,19 +14,21 @@ const firestore = new Firestore();
 function isJson(object) {
     try {
         JSON.parse(object);
+
     } catch (e) {
+
         return false;
+
     }
     return true;
 }
 
-async function writeDocument(collection, docName, doc) {
-    const document = firestore.doc(`${collection}/${docName}`);
-    if (isJson(doc)) {
-        await document.set(doc);
-    } else {
-        return "error"
-    }
+async function writeDocument(doc, collection, docName, subCollecion, subDoc) {
+    const document = (typeof subCollecion !== "undefined" && typeof subDoc !== "undefined")
+        ? firestore.collection(collection).doc(docName).collection(subCollecion).doc(subDoc)
+        : firestore.collection(collection).doc(docName);
+
+    await document.set(doc);
 }
 async function setDocument(collection, docName, doc) {
     const document = firestore.doc(`${collection}/${docName}`);
@@ -36,14 +38,14 @@ async function setDocument(collection, docName, doc) {
         return "error"
     }
 }
-async function readDocument(collection, docName, doc) {
-    const document = firestore.doc(`${collection}/${docName}`);
-    if (isJson(doc)) {
-        const doc = await document.get();
-        return doc;
-    } else {
-        return "error"
-    }
+async function readDocument(collection, docName, subCollecion, subDoc) {
+    const document = (typeof subCollecion !== "undefined" && typeof subDoc !== "undefined")
+        ? firestore.collection(collection).doc(docName).collection(subCollecion).doc(subDoc)
+        : firestore.collection(collection).doc(docName);
+
+    const doc = await document.get();
+    return doc;
+
 }
 
 async function deleteDocument(collection, docName, doc) {
@@ -53,4 +55,8 @@ async function deleteDocument(collection, docName, doc) {
     } else {
         return "error"
     }
+}
+module.exports = {
+    writeDocument,
+    readDocument
 }

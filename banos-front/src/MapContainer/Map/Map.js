@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { GoogleMap, Marker ,DistanceMatrixService,DirectionsService} from '@react-google-maps/api';
+import { GoogleMap, Marker, DistanceMatrixService, DirectionsService } from '@react-google-maps/api';
 import './Map.css'
 import BathCluster from './BathCluster/BathCluster';
-import icons from '../../icons/Icons'
+import icons from '../../icons/IconsPath'
 export default function Map() {
     const [gpsData, setGpsData] = useState(
         {
@@ -18,42 +18,41 @@ export default function Map() {
         } else {
             console.log("Gps no aceptado")
         }
-    },[]);
+    }, []);
 
 
 
-    return <GoogleMap zoom={16} center={gpsData} mapContainerClassName="map">
-        <Marker position={gpsData} animation={window.google.maps.Animation.DROP} icon={
-    {path:icons.iconPerson,
-    fillColor: "gold",
-    fillOpacity: 0.9,
-    scale: 0.1,
-    strokeColor: "blue",
-    strokeWeight: 2}
-  } 
-  
-  />
-  <BathCluster />
+    return (<>
+
+        <GoogleMap zoom={16} center={gpsData} mapContainerClassName="map">
+            <Marker position={gpsData} animation={window.google.maps.Animation.DROP} icon={
+                {
+                    path: icons.iconPerson,
+                    fillColor: "gold",
+                    fillOpacity: 0.9,
+                    scale: 0.1,
+                    strokeColor: "blue",
+                    strokeWeight: 2
+                }
+            }
+
+            />
+            <BathCluster />
 
 
-  <DistanceMatrixService
- options={{
-           destinations: [gpsData],
-           origins: [{
-            lat: -34.044726,
-            lng: -71.6148218
-        }],
-           travelMode: "DRIVING",
-         }}
- callback = {(response) => {console.log(response)}}
-/>
+            <DistanceMatrixService
+                options={{
+                    destinations: [gpsData],
+                    origins: [{
+                        lat: -34.044726,
+                        lng: -71.6148218
+                    }],
+                    travelMode: "DRIVING",
+                }}
+                callback={(response) => { console.log(response) }}
+            />
 
-{/* <DirectionsService
-options={
-   ,
-    origin: gpsData,
-    travelMode: "WALKING"}>
-
-</DirectionsService> */}
-    </GoogleMap>
+        </GoogleMap>
+    </>
+    )
 }
