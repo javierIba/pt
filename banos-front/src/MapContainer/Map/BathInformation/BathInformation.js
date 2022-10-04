@@ -3,13 +3,12 @@ import React, { useState } from 'react';
 import { Offcanvas,Container,Row,Col } from 'react-bootstrap';
 import icons from '../../../icons/IconsPath'
 import IconModel from '../../../icons/IconModel'
-export default function (props) {
+export default function BathInformation(props) {
 
   const show = props.show;
   const handleClose = props.handleClose;
-
+  const toiletInformation = props.toiletInformation;
   
-
 
   const offcanvasTittle = "Información";
   const iconFullStarOptions = {
@@ -18,12 +17,18 @@ export default function (props) {
     width:'30px',
     height:'30px'
   }
+
   const iconEmptyStarOptions = {
     path:icons.iconEmptyStar,
     fill:"gold",
     width:'30px',
     height:'30px'
   }
+
+  function calification(toilet){
+    let stars = <IconModel options = {iconFullStarOptions} />;
+  }
+
   return (
     <>
       <Offcanvas show={show} onHide={handleClose}>
@@ -36,6 +41,7 @@ export default function (props) {
               <Col>
               <IconModel options = {iconFullStarOptions} />
           <IconModel options = {iconEmptyStarOptions}/>
+         
               </Col>
             </Row>
           </Container>

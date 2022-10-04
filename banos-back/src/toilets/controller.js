@@ -1,2 +1,10 @@
 
-const readDocument = require('./../services/firebase/firebase');
+const { readDocument } = require('./../services/firebase/firebase');
+
+function getToilet() {
+    return readDocument("jeje","ajiow");
+}
+
+module.exports = {
+    getToilet
+}

@@ -44,7 +44,8 @@ async function readDocument(collection, docName, subCollecion, subDoc) {
         : firestore.collection(collection).doc(docName);
 
     const doc = await document.get();
-    return doc;
+
+    return doc.data();
 
 }
 
