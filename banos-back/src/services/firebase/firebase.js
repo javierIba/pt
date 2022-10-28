@@ -23,12 +23,16 @@ function isJson(object) {
     return true;
 }
 
+
+
+
 async function writeDocument(doc, collection, docName, subCollecion, subDoc) {
     const document = (typeof subCollecion !== "undefined" && typeof subDoc !== "undefined")
         ? firestore.collection(collection).doc(docName).collection(subCollecion).doc(subDoc)
         : firestore.collection(collection).doc(docName);
-
+    
     await document.set(doc);
+    console.log("listo")
 }
 async function setDocument(collection, docName, doc) {
     const document = firestore.doc(`${collection}/${docName}`);

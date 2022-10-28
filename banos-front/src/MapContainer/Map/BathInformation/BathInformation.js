@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Offcanvas,Container,Row,Col } from 'react-bootstrap';
+import { Offcanvas, Container, Row, Col } from 'react-bootstrap';
 import icons from '../../../icons/IconsPath'
 import IconModel from '../../../icons/IconModel'
 export default function BathInformation(props) {
@@ -8,25 +8,34 @@ export default function BathInformation(props) {
   const show = props.show;
   const handleClose = props.handleClose;
   const toiletInformation = props.toiletInformation;
-  
+  console.log(toiletInformation)
 
   const offcanvasTittle = "Información";
   const iconFullStarOptions = {
-    path:icons.iconFullStar,
-    fill:"gold",
-    width:'30px',
-    height:'30px'
+    path: icons.iconFullStar,
+    fill: "gold",
+    width: '30px',
+    height: '30px'
   }
 
   const iconEmptyStarOptions = {
-    path:icons.iconEmptyStar,
-    fill:"gold",
-    width:'30px',
-    height:'30px'
+    path: icons.iconEmptyStar,
+    fill: "gold",
+    width: '30px',
+    height: '30px'
   }
 
-  function calification(toilet){
-    let stars = <IconModel options = {iconFullStarOptions} />;
+  function calification(starsQuantity) {
+    let stars = [];
+    let fullStar = <IconModel options={iconFullStarOptions} />;
+    let emptyStar = <IconModel options = {iconEmptyStarOptions}/>
+    for (let i = 0; i < starsQuantity; i++) {
+      stars.push(fullStar);
+    }
+    for (let i = stars.length; i < 5; i++) {
+      stars.push(emptyStar)
+    }
+    return stars;
   }
 
   return (
@@ -39,9 +48,8 @@ export default function BathInformation(props) {
           <Container>
             <Row>
               <Col>
-              <IconModel options = {iconFullStarOptions} />
-          <IconModel options = {iconEmptyStarOptions}/>
-         
+                {calification(toiletInformation.reviews[0].calification)}
+
               </Col>
             </Row>
           </Container>
@@ -49,12 +57,12 @@ export default function BathInformation(props) {
           <Container>
             <Row>
               <Col>
-              <IconModel options = {iconFullStarOptions} />
-          <IconModel options = {iconEmptyStarOptions}/>
+                {/* <IconModel options = {iconFullStarOptions} />
+          <IconModel options = {iconEmptyStarOptions}/> */}
               </Col>
             </Row>
           </Container>
-          
+
         </Offcanvas.Body>
       </Offcanvas>
     </>
