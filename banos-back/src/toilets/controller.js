@@ -1,5 +1,5 @@
 
-const { readDocument,writeDocument } = require('./../services/firebase/firebase');
+const { readDocument,writeDocument } = require('./../services/firebase/firebaseStorage/firebaseStorage');
 
 const toiletExample = [{
     id: 1,
