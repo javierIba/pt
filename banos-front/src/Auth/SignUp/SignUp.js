@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
-import './signup.css'
-
+import { useState, useEffect } from 'react';
+import './signup.css';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function SignUp() {
@@ -9,20 +9,23 @@ export default function SignUp() {
         password: null,
         name: null
     });
-    
+
     const [isClick, setIsClick] = useState({
         email: false,
         password: false,
         name: false
     });
-    
-    const [errorMessage, setErrorMessage] = useState(null);
-    
-    
+
+    const [serverResponse, setServerResponse] = useState({
+        code: null,
+        message: null
+    });
+
+
     const validationErrorMessage = {
-        email:"Email no valido, debe cumplir con el siguiente formato: xxx@xxx.xxx",
-        password:"La contraseña debe tener más de 6 caracteres",
-        name:"Nombre no valido, solo puede contener letras"
+        email: "Email no valido, debe cumplir con el siguiente formato: xxx@xxx.xxx",
+        password: "La contraseña debe tener más de 6 caracteres",
+        name: "Nombre no valido, solo puede contener letras"
     };
 
     const emailRegx = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i;
@@ -31,7 +34,8 @@ export default function SignUp() {
     const emailValidation = (userData.email !== null) && !emailRegx.test(userData.email) && isClick.email;
     const passwordValidation = (userData.password !== null) && (6 >= userData.password.length) && isClick.password;
     const nameValidation = (userData.name !== null) && !nameRegx.test(userData.name) && isClick.name;
-
+    
+    const navigate = useNavigate();
 
     function handleInputsForm(e) {
 
@@ -50,12 +54,25 @@ export default function SignUp() {
         }
     }
 
-   
 
-    function handleForm(e) {
-        e.preventDefault()
-        
 
+    async function handleForm(e) {
+        e.preventDefault();
+        let petition = await fetch('http://localhost:8080/users/signup', {
+            method: 'POST',
+            body: JSON.stringify(userData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        let token = await petition;
+        let data = await petition.json();
+        setServerResponse({
+            code: data.code,
+            message: data.message
+        });
+        localStorage.setItem('Authorization-Token', data.token);
+        navigate('/');
     }
 
 
@@ -84,7 +101,7 @@ export default function SignUp() {
 
                     <button >Registrarse</button>
                     <p className="message">¿Ya estas registrado? <a href="#">Inicia sesión</a></p>
-                    <p className="error-message">{errorMessage}</p>
+                    <p className={(serverResponse.code === 200) ? "accepted-message" : "error-message"}>{serverResponse.message}</p>
                 </form>
             </div>
         </div>

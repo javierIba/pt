@@ -1,13 +1,8 @@
 const { Router } = require('express');
-const { getToilet }= require('./controller')
+const { getAllToilets,getAlltoiletLatLng }= require('./controller')
 const router = Router();
 
-
-router.get('/', async (req, res) => {
-    let doc = await getToilet();
-    res.send(doc)
-    // getToilet();
-//    console.log(2)
-})
+router.get('/getAllToiletsLatLng', getAlltoiletLatLng);
+router.get('/getAllToilets', getAllToilets);
 
 module.exports = router;

@@ -24,9 +24,8 @@ async function writeDocument(doc, collection, docName, subCollecion, subDoc) {
     const document = (typeof subCollecion !== "undefined" && typeof subDoc !== "undefined")
         ? firestore.collection(collection).doc(docName).collection(subCollecion).doc(subDoc)
         : firestore.collection(collection).doc(docName);
-    
+
     await document.set(doc);
-    console.log("listo")
 }
 async function setDocument(collection, docName, doc) {
     const document = firestore.doc(`${collection}/${docName}`);
@@ -46,7 +45,15 @@ async function readDocument(collection, docName, subCollecion, subDoc) {
     return doc.data();
 
 }
-
+async function readAllDocumentsOfCollection(collectionName) {
+    const collectionRef = firestore.collection(collectionName);
+    const snapshot = await collectionRef.get();
+    let collectionResponse = [];
+    snapshot.forEach(doc => {
+        collectionResponse.push(doc.data());
+    });
+    return collectionResponse
+}
 async function deleteDocument(collection, docName, doc) {
     const document = firestore.doc(`${collection}/${docName}`);
     if (isJson(doc)) {
@@ -55,7 +62,10 @@ async function deleteDocument(collection, docName, doc) {
         return "error"
     }
 }
+
+
 module.exports = {
     writeDocument,
-    readDocument
+    readDocument,
+    readAllDocumentsOfCollection
 }

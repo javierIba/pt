@@ -8,7 +8,7 @@ export default function BathInformation(props) {
   const show = props.show;
   const handleClose = props.handleClose;
   const toiletInformation = props.toiletInformation;
-  console.log(toiletInformation)
+
 
   const offcanvasTittle = "Información";
   const iconFullStarOptions = {

@@ -16,7 +16,7 @@ export default function Map() {
                 setGpsData({ lat: position.coords.latitude, lng: position.coords.longitude });
             });
         } else {
-            console.log("Gps no aceptado")
+            console.log("Gps no aceptado");
         }
     }, []);
 
