@@ -8,10 +8,13 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import StarsReview from './icons/starsReview/StarsReview';
 
 function App() {
+  
   return (
       <Router>
+      
         <div>
           <Routes>
             <Route path='/' element={<MapContainer />}/>
