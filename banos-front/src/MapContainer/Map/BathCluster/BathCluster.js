@@ -43,7 +43,15 @@ const BathCluster = () => {
 
     const options = iconOptions.iconBath;
 
+       
+
+
+   
+
     const toiletCollection = (toilets) ? toilets.latLngToiletCollection : [{}];
+
+
+
 
     function handleOffCanvas() {
 
@@ -75,52 +83,3 @@ const BathCluster = () => {
 export default BathCluster;
 
 
-
-    // /* Aqui va el fetch a la api para consultar los baños*/
-
-    // const toiletExample = [{
-    //     id: 1,
-    //     lng: -71.61775403926892,
-    //     lat: -33.046804349799366,
-    //     free: true,
-    //     disability_access: true,
-    //     diaper_changing: true,
-
-    //     reviews: [{
-    //         id: 1,
-    //         username: "javier ibáñez",
-    //         calification: 4,
-    //         cleaning_calification: 3,
-    //         privacy_calification: 5,
-    //         free: true,
-    //         disability_access: true,
-    //         diaper_changing: true
-    //     }]
-
-    // },
-    // {
-    //     id: 2,
-    //     lng: -71.60720761052225,
-    //     lat: -33.04792590232038,
-    //     free: true,
-    //     disability_access: true,
-    //     diaper_changing: true,
-
-    //     reviews: [{
-    //         id: 1,
-    //         username: "javier ibáñez",
-    //         calification: 1,
-    //         cleaning_calification: 3,
-    //         privacy_calification: 2,
-    //         free: true,
-    //         disability_access: true,
-    //         diaper_changing: true
-    //     }]
-    // }]
-
-       // const baths = [
-    //     { lat: -33.046804349799366, lng: -71.61775403926892 },
-    //     { lat: -33.04792590232038, lng: -71.60720761052225 },
-    //     { lat: -33.04780928608343, lng: -71.61412408328582 },
-    //     { lat: -33.0442774069054, lng: -71.60438537161383 }
-    // ]
