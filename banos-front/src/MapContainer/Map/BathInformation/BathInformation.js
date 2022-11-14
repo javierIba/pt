@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import { Offcanvas, Container, Row, Col, Card } from 'react-bootstrap';
+import { Offcanvas, Container, Row, Col, Card, Button } from 'react-bootstrap';
 import IconModel from '../../../icons/IconModel'
 import iconOptions from '../../../icons/IconOptions';
+
 export default function BathInformation(props) {
   const show = props.show;
   const handleClose = props.handleClose;
@@ -112,10 +113,16 @@ export default function BathInformation(props) {
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">
-                  <Card.Title>
-                  <h5 className='text-center'>Horario</h5>
-                  </Card.Title>
+                    <h5 className='text-center'>Horario</h5>
                     <h5 className='text-center'>{toiletInformation.Horario}</h5>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <Button variant="secondary">¿Quieres agregar una opinión?</Button>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <Button variant="secondary">Recomienda un baño</Button>
                   </Card>
                   
                   
