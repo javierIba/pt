@@ -27,7 +27,7 @@ const BathCluster = () => {
         drawToilets()
 
     },[])
-
+    
     const handleClose = () => setShowOffCanvas({
         state: false,
         toilet: null
@@ -44,7 +44,7 @@ const BathCluster = () => {
 
     function handleOffCanvas() {
 
-        return (showOffCanvas.state) ? <BathInformation show={showOffCanvas.state} handleClose={handleClose} toiletInformation={showOffCanvas.toilet} /> : ""
+        return (showOffCanvas.state) ? <BathInformation show={showOffCanvas.state} handleClose={handleClose} id={showOffCanvas.toilet.id} /> : ""
     }
 
 

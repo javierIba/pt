@@ -13,7 +13,7 @@ export default function BathInformation(props) {
     async function getToiletInformation() {
       /*CAMBIAR EL EJEMPLO */
       const data = {
-        id: "toiletExample[0].id"
+        id: props.id
       }
       let response = await fetch("http://localhost:8080/toilets/getToilet", {
         method: 'POST',

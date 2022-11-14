@@ -405,12 +405,37 @@ async function e(req, res) {
 
     }]
     try {
-        for (i = 0; i < toiletExample.length; i++) {
-            await writeDocument(toiletExample[i], "toilets",  `baño${i}`);
+        let x = {
+            id: 18,
+            lng: -71.62497,
+            lat: -33.04621,
+            free: true,
+            disability_access: true,
+            diaper_changing: true,
+    
+            reviews: [{
+                id: 1,
+                username: "javier ibáñez",
+                calification: 4,
+                cleaning_calification: 3,
+                privacy_calification: 5,
+                free: true,
+                disability_access: true,
+                diaper_changing: true
+            }]
+    
         }
-        res.send(200).json({x:"enviado"})
+        for (i = 0; i < toiletExample.length; i++) {
+            let toilet = toiletExample[i];
+            console.log(toilet)
+            toilet.id = "baño" + i
+            console.log(toilet)
+            await writeDocument(toilet, "toilets", `baño${i}`);
+
+        }
+        res.status(200).json({x:"enviado"})
     } catch (error) {
-        res.send(500).json({x:"dsa{dska"})
+        res.status(500).json({x:"dsa{dska"})
     }
    
 
