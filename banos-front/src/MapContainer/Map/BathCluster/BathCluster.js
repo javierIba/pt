@@ -39,19 +39,8 @@ const BathCluster = () => {
         })
     }
 
-
-
     const options = iconOptions.iconBath;
-
-       
-
-
-   
-
     const toiletCollection = (toilets) ? toilets.latLngToiletCollection : [{}];
-
-
-
 
     function handleOffCanvas() {
 

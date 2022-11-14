@@ -10,15 +10,10 @@ function isJson(object) {
         JSON.parse(object);
 
     } catch (e) {
-
         return false;
-
     }
     return true;
 }
-
-
-
 
 async function writeDocument(doc, collection, docName, subCollecion, subDoc) {
     const document = (typeof subCollecion !== "undefined" && typeof subDoc !== "undefined")
