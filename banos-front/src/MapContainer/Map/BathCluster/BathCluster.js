@@ -43,7 +43,6 @@ const BathCluster = () => {
     const toiletCollection = (toilets) ? toilets.latLngToiletCollection : [{}];
 
     function handleOffCanvas() {
-
         return (showOffCanvas.state) ? <BathInformation show={showOffCanvas.state} handleClose={handleClose} id={showOffCanvas.toilet.id} /> : ""
     }
 

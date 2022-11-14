@@ -11,7 +11,6 @@ export default function BathInformation(props) {
 
   useEffect(() => {
     async function getToiletInformation() {
-      /*CAMBIAR EL EJEMPLO */
       const data = {
         id: props.id
       }
@@ -113,10 +112,9 @@ export default function BathInformation(props) {
             <Container>
               <Row>
                 <Col>
-                {/* <div>
-                  <p>Reseñas</p>
-
-                </div> */}
+              <button type="button">
+              Agregar opinion  
+              </button>
                 </Col>
               </Row>
             </Container>
