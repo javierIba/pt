@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import { Offcanvas, Container, Row, Col } from 'react-bootstrap';
+import { Offcanvas, Container, Row, Col, Card, Button } from 'react-bootstrap';
 import IconModel from '../../../icons/IconModel'
 import iconOptions from '../../../icons/IconOptions';
+
 export default function BathInformation(props) {
   const show = props.show;
   const handleClose = props.handleClose;
@@ -70,39 +71,58 @@ export default function BathInformation(props) {
       {(toiletInformation) ?
         <Offcanvas show={show} onHide={handleClose}>
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>{offcanvasTittle}</Offcanvas.Title>
+            <Offcanvas.Title className='text-center'>{offcanvasTittle}</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Container>
               <Row>
                 <Col>
-                  <div>
-                    <h2>{toiletInformation.address}</h2>
-                  </div>
-                  <div>
-                    <p>Calificacíon</p>
-                    {calification(toiletInformation.reviews.map(review => review.calification))}
-                  </div>
-                  <div>
-                    <p>Limpieza</p>
-                    {calification(toiletInformation.reviews.map(review => review.cleaning_calification))}
-                  </div>
-                  <div>
-                    <p>Privacidad</p>
-                    {calification(toiletInformation.reviews.map(review => review.privacy_calification))}
-                  </div>
-                  <div>
-                    <p>Gratis</p>
-                    {(calculateYesNo(toiletInformation.reviews.map(review => review.free))) ? "Si":"No"}
-                  </div>
-                  <div>
-                    <p>Acceso para personas en situación de discapacidad</p>
-                    {(calculateYesNo(toiletInformation.reviews.map(review => review.disability_access))) ? "Si":"No"}
-                  </div>
-                  <div>
-                    <p>Mudador</p>
-                    {(calculateYesNo(toiletInformation.reviews.map(review => review.diaper_changing))) ? "Si":"No"}
-                  </div>
+                  <Card bg='info' border="secondary">
+                    <h3 className='text-center'>{toiletInformation.address}</h3>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                      <h5 className='text-center'>Calificación</h5>
+                      <h5 className='text-center'>{calification(toiletInformation.reviews.map(review => review.calification))}</h5>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <h5 className='text-center'>Limpieza</h5>
+                    <h5 className='text-center'>{calification(toiletInformation.reviews.map(review => review.cleaning_calification))}</h5>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <h5 className='text-center'>Privacidad</h5>
+                    <h5 className='text-center'>{calification(toiletInformation.reviews.map(review => review.privacy_calification))}</h5>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <h5 className='text-center'>Gratis</h5>
+                    <h5 className='text-center'>{(calculateYesNo(toiletInformation.reviews.map(review => review.free))) ? "Si":"No"}</h5>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <h5 className='text-center'>Acceso para personas en situación de discapacidad</h5>
+                    <h5 className='text-center'>{(calculateYesNo(toiletInformation.reviews.map(review => review.disability_access))) ? "Si":"No"}</h5>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <h5 className='text-center'>Mudador</h5>
+                    <h5 className='text-center'>{(calculateYesNo(toiletInformation.reviews.map(review => review.diaper_changing))) ? "Si":"No"}</h5>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <h5 className='text-center'>Horario</h5>
+                    <h5 className='text-center'>{toiletInformation.Horario}</h5>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <Button variant="secondary">¿Quieres agregar una opinión?</Button>
+                  </Card>
+                  <br />
+                  <Card bg='info' border="secondary">
+                    <Button variant="secondary">Recomienda un baño</Button>
+                  </Card>
                   
                   
                 </Col>
