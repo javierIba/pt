@@ -16,32 +16,34 @@ const BathCluster = (props) => {
     const [toilets, setToilets] = useState(null);
 
 
-    
+
     let today = new Date()
     let actualDay = today.getDay()
     let hour = new Date('1/1/1999 ' + `${today.getHours()}:${today.getMinutes()}`);
 
-    function comprobarHora(toilet){
-        let option  = {path: icons.iconBath,
-          fillColor: "yellow",
-          fillOpacity: 0.9,
-          scale: 0.1,
-          strokeColor: "black",
-          strokeWeight: 2}
-        
-            
-        let ce = (toilet)?toilet.cerrado.split(':'):[]
-        let ap = (toilet)?toilet.cerrado.split(':'):[]
-        if(ce[0] < today.getHours()   ){
+    function comprobarHora(toilet) {
+        let option = {
+            path: icons.iconBath,
+            fillColor: "yellow",
+            fillOpacity: 0.9,
+            scale: 0.1,
+            strokeColor: "black",
+            strokeWeight: 2
+        }
+
+
+        let ce = (toilet) ? toilet.cerrado.split(':') : []
+        let ap = (toilet) ? toilet.apertura.split(':') : []
+        if (ce[0] > today.getHours() && today.getHours() >= ap[0]) {
             option.fillColor = "green"
-            
-        }else if(today.getHours >= "00" && ce[0] < "05" ){
+
+        } else if (today.getHours >= "00" && ce[0] < "05") {
             option.fillColor = "green"
-        }else{
+        } else {
             option.fillColor = "red"
         }
         return option
-      }
+    }
 
 
     useEffect(() => {
@@ -56,8 +58,8 @@ const BathCluster = (props) => {
         }
         drawToilets()
 
-    },[])
-    
+    }, [])
+
     const handleClose = () => setShowOffCanvas({
         state: false,
         toilet: null
@@ -69,7 +71,7 @@ const BathCluster = (props) => {
         })
     }
 
-    
+
     const toiletCollection = (toilets) ? toilets.latLngToiletCollection : [{}];
 
     function handleOffCanvas() {
@@ -84,13 +86,14 @@ const BathCluster = (props) => {
         <>
             <MarkerClusterer >
                 {clusterer =>
-                    toiletCollection.map(toilet =>{ 
-                        let options = (toilets != null)?comprobarHora(toilet):iconOptions.iconBath;
+                    toiletCollection.map(toilet => {
+                        let options = (toilets != null) ? comprobarHora(toilet) : iconOptions.iconBath;
                         return (
-                        <>
-                            <Marker key={createKey(toilet.lat, toilet.lng)} position={{ lat: toilet.lat, lng: toilet.lng }}  clusterer={clusterer} icon={options} onClick={() => handleShow(toilet)} />
-                        </>
-                    )}
+                            <>
+                                <Marker key={createKey(toilet.lat, toilet.lng)} position={{ lat: toilet.lat, lng: toilet.lng }} clusterer={clusterer} icon={options} onClick={() => handleShow(toilet)} />
+                            </>
+                        )
+                    }
                     )
                 }
 

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Recuperar() {
     const [password, setPassword] = useState('');
     const [error,setError] = useState('');
+
     const params = useParams();
     const navigate = useNavigate();
 
@@ -27,11 +28,11 @@ export default function Recuperar() {
         }else{
             setError(reponseData.message);
         }
-
     }
 
 
     return (<>
+    
         <div className="login-page">
             <div className="form">
                 <div>
