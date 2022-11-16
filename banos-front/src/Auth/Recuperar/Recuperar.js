@@ -35,7 +35,7 @@ export default function Recuperar() {
         <div className="login-page">
             <div className="form">
                 <div>
-                    <label className="input-label" htmlFor="signupPassword">Contraseña</label>
+                    <label className="input-label" htmlFor="signupPassword">Nueva contraseña</label>
                     <input type="password" placeholder="Contraseña" name="password" onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <p>{error}</p>

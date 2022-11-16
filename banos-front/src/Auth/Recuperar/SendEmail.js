@@ -5,7 +5,7 @@ export default function SendEmail() {
     const [email, setEmail] = useState('');
 
     async function handleInput() {
-        let link = `http://localhost:8080/recuperar/${email}`
+        let link = `http://localhost:3000/recuperar/${email}`
         let data = {
             email: email,
             link: link

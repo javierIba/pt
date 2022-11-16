@@ -90,7 +90,7 @@ export default function Login() {
                     </div>
                     <button type="button" onClick={(e) => handleForm(e)}>Iniciar Sesión</button>
                     <p className="message">¿Aún no estas registrado? <a onClick={() => navigate('/signUp')}>Crea una cuenta</a></p>
-                    <p className="message">¿Olvidaste tu contraseña?<a onClick={() => navigate('/signUp')}> Haz click aquí</a></p>
+                    <p className="message">¿Olvidaste tu contraseña?<a onClick={() => navigate('/recsendemail')}> Haz click aquí</a></p>
                     <p className={(serverResponse.code === 200) ? "accepted-message" : "error-message"}>{serverResponse.message}</p>
                 </form>
             </div>
