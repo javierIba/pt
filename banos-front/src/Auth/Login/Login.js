@@ -39,13 +39,19 @@ export default function Login() {
         });
 
         let responseData = await response.json();
+        if (responseData.TipoUsuario === 'admin') {
+            localStorage.setItem('A', responseData.TipoUsuario);
+     
+        }
+
         setServerResponse({
             code: responseData.code,
             message: responseData.message
         });
+
         if (responseData.token) {
             localStorage.setItem('Authorization-Token', responseData.token);
-            navigate('/');  
+            navigate('/');
         }
     }
 
@@ -65,8 +71,6 @@ export default function Login() {
     function handleForm(e) {
         e.preventDefault();
         signin();
-
-
     }
 
     return (<>
@@ -86,6 +90,7 @@ export default function Login() {
                     </div>
                     <button type="button" onClick={(e) => handleForm(e)}>Iniciar Sesión</button>
                     <p className="message">¿Aún no estas registrado? <a onClick={() => navigate('/signUp')}>Crea una cuenta</a></p>
+                    <p className="message">¿Olvidaste tu contraseña?<a onClick={() => navigate('/signUp')}> Haz click aquí</a></p>
                     <p className={(serverResponse.code === 200) ? "accepted-message" : "error-message"}>{serverResponse.message}</p>
                 </form>
             </div>

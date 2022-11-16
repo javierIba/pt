@@ -52,13 +52,10 @@ async function readAllDocumentsOfCollection(collectionName) {
     });
     return collectionResponse
 }
-async function deleteDocument(collection, docName, doc) {
+async function deleteDocument(collection, docName) {
     const document = firestore.doc(`${collection}/${docName}`);
-    if (isJson(doc)) {
-        await document.delete();
-    } else {
-        return "error"
-    }
+    await document.delete();
+
 }
 
 
@@ -66,5 +63,6 @@ module.exports = {
     writeDocument,
     readDocument,
     readAllDocumentsOfCollection,
-    writeDocumentWithoutId
+    writeDocumentWithoutId,
+    deleteDocument
 }

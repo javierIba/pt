@@ -80,6 +80,58 @@ async function postReview(req, res) {
 
 }
 
+async function addToilet(req,res){
+    const {
+        calification,
+        cleaning_calification,
+        privacy_calification,
+        free,
+        disability_access,
+        diaper_changing,
+        address,
+        apertura,
+        cerrado,
+        id,
+        lng,
+        lat
+    } = req.body;
+
+    try {
+        data = {
+            calification,
+            cleaning_calification,
+            privacy_calification,
+            free,
+            disability_access,
+            diaper_changing,
+            address,
+            apertura,
+            cerrado,
+            id,
+            lng:parseFloat(lng),
+            lat:parseFloat(lat),
+            reviews: [{
+                calification
+                ,
+                cleaning_calification
+                ,
+                diaper_changing
+                ,
+                disability_access
+                ,
+                free
+                ,
+                privacy_calification
+
+            }]
+        }
+        let collectionName = 'toilets'
+        await writeDocument(data,collectionName,id);
+        res.status(200).json({code:200});
+    } catch (error) {
+        res.status(500).json({code:500})
+    }
+}
 
 async function e(req, res) {
     const toiletExample = [{
@@ -503,5 +555,6 @@ module.exports = {
     getAlltoiletLatLng,
     getToiletByid,
     e,
-    postReview
+    postReview,
+    addToilet
 }

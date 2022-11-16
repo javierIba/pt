@@ -54,7 +54,6 @@ export default function BathInformation(props) {
 
     props.mapa(results)
 
-    console.log(results);
   }
 
   /* function clearRoute(destino){
@@ -128,12 +127,6 @@ export default function BathInformation(props) {
     }
   }
 
-
-
-
-
-
-
   return (
     <>
       {(toiletInformation) ?
@@ -199,16 +192,19 @@ export default function BathInformation(props) {
                         <Card bg='info' border="secondary">
                           <Button variant="secondary" onClick={() => setShowBathRecomendation(true)}>Recomienda un baño</Button>
                         </Card>
-                        <br/>
+                        <br />
                         <Card bg='info' border="secondary">
-                          <Button variant="secondary" onClick={() => {localStorage.removeItem('Authorization-Token');window.location.reload()}}>Cerrar sesión</Button>
+                          <Button variant="secondary" onClick={() => { 
+                            localStorage.removeItem('Authorization-Token'); 
+                            localStorage.removeItem('A'); 
+                            window.location.reload() }}>Cerrar sesión</Button>
                         </Card>
-                        
+
                       </> :
                       <Card bg='info' border="secondary">
                         <Button variant="secondary" onClick={() => navigate('/login')}>¿Quieres agregar una opinión? Inicia sesión</Button>
                       </Card>
-                       
+
 
                   }
 
@@ -237,4 +233,3 @@ export default function BathInformation(props) {
   );
 }
 
-//onClick={()=> calculateRoute(toiletInformation.address)} 

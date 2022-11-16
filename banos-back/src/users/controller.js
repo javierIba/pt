@@ -20,9 +20,10 @@ async function login(req, res) {
                     .json({
                         code: 200,
                         message: "Usuario autenticado exitosamente",
-                        token: accessToken
+                        token: accessToken,
+                        TipoUsuario: userData.TipoUsuario
                     });
-                    
+
             } else {
                 res.status(400).json({ code: 400, message: "Usuario o contraseña incorrectos" });
             }
@@ -49,7 +50,8 @@ async function signUp(req, res) {
             const doc = {
                 email,
                 password: encryptedPassword,
-                name
+                name,
+                TipoUsuario: "usuario"
             }
             let userVerification = await userDuplicateVerification(collection, docName);
 
@@ -74,15 +76,28 @@ async function signUp(req, res) {
     }
 }
 
-
+async function recuperarContrasena(req, res) {
+    const { password, email } = req.body;
+    try {
+        let user = await readDocument('users', email);
+      
+        const encryptedPassword = await encrypt(password);
+        user['password'] = encryptedPassword;
+        await writeDocument(user, 'users', email);
+        res.status(200).json({ code: 200, message: "contraseña reestablecida" });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ code: 500, message: "Error" });
+    }
+}
 
 
 function tokenValidation(req, res) {
-    
+
     try {
-        res.status(200).json({code:200,message:'Token valido',validate:true});
+        res.status(200).json({ code: 200, message: 'Token valido', validate: true });
     } catch (error) {
-        res.status(500).json({code:500,message:"Internal server error"});
+        res.status(500).json({ code: 500, message: "Internal server error" });
     }
 }
 
@@ -91,7 +106,8 @@ function tokenValidation(req, res) {
 module.exports = {
     signUp,
     login,
-    tokenValidation
+    tokenValidation,
+    recuperarContrasena
 }
 
 

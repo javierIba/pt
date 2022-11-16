@@ -26,6 +26,8 @@ export default function BathRecomendation(props) {
 
     const handleForm = async () => {
         let data = formData;
+        let id = generateId();
+        data['id'] = id;
         data['AuthorizationToken'] = localStorage.getItem('Authorization-Token');
         let reponse = await fetch('http://localhost:8080/toiletrecomendation/toiletAdd', {
             method: 'POST',
@@ -37,7 +39,15 @@ export default function BathRecomendation(props) {
         let dataReponse = await reponse.json();
         props.close();
     }
-
+    function generateId() {
+        let id = new Date().getTime();
+        let uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            let r = (id + Math.random() * 16) % 16 | 0;
+            id = Math.floor(id / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
+    }
     return (
         <>
             <Modal show={props.show} onHide={props.close}>
@@ -63,7 +73,7 @@ export default function BathRecomendation(props) {
                                     <label>Horario de cierre</label>
                                     <div>
                                         <input type="time" id="appt" name="appt"
-                                            min="09:00" max="18:00" required onChange={(e) => setFormData({ ...formData, cierre: e.target.value })} />
+                                            min="09:00" max="18:00" required onChange={(e) => setFormData({ ...formData, cerrado: e.target.value })} />
                                     </div>
                                 </div>
                                 <div >
