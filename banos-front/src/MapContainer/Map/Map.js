@@ -17,9 +17,6 @@ export default function Map() {
 
     const [prub,setPrub] = useState(null)
     
- 
-
-  
     useEffect(() => {
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition((position) => {
