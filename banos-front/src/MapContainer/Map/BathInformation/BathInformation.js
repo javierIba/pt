@@ -1,14 +1,59 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { Offcanvas, Container, Row, Col, Card, Button } from 'react-bootstrap';
 import IconModel from '../../../icons/IconModel'
 import iconOptions from '../../../icons/IconOptions';
+import {DirectionsRenderer, DirectionsService} from '@react-google-maps/api';
+import Map from '../Map';
+/*global google*/
 
 export default function BathInformation(props) {
   const show = props.show;
   const handleClose = props.handleClose;
   // const toiletInformation = props.toiletInformation;
   const [toiletInformation, setToiletInformation] = useState(null);
+  
+  //Funciones PARA LA RUTA
+
+  const [gpsData, setGpsData] = useState(
+    );
+
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            setGpsData({ lat: position.coords.latitude, lng: position.coords.longitude });
+        });
+    } else {
+        console.log("Gps no aceptado");
+    }
+  }, []);
+
+
+
+  const [directionsResponse, setDirectionResponse] = useState(null) 
+
+  
+  async function calculateRoute(){
+  
+    const directionsService = new google.maps.DirectionsService()
+    const results = await directionsService.route({
+        origin: gpsData,
+        destination: toiletInformation.address,
+        travelMode: google.maps.TravelMode.WALKING
+    }) 
+    
+    props.mapa(results)
+
+    console.log(results);
+}
+
+/* function clearRoute(destino){
+    setDirectionResponse(null)
+    destino = ''
+}*/
+
+  //TERMINA FUNCIONES PARA LA RUTA
+
 
   useEffect(() => {
     async function getToiletInformation() {
@@ -67,6 +112,10 @@ export default function BathInformation(props) {
       return false
     }
   }
+
+
+
+
   return (
     <>
       {(toiletInformation) ?
@@ -118,7 +167,7 @@ export default function BathInformation(props) {
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">
-                    <Button variant="secondary">Mostar ruta</Button>
+                    <Button variant="secondary" onClick={()=> calculateRoute(toiletInformation.address)}>Mostar ruta</Button>
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">
@@ -154,12 +203,13 @@ export default function BathInformation(props) {
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           </Offcanvas.Body>
-
-
+        
         </Offcanvas>
-
+        
       }
 
     </>
   );
 }
+
+//onClick={()=> calculateRoute(toiletInformation.address)} 

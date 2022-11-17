@@ -7,7 +7,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 
 import BathInformation from './../BathInformation/BathInformation';
 
-const BathCluster = () => {
+const BathCluster = (props) => {
     const [showOffCanvas, setShowOffCanvas] = useState({
         state: false,
         toilet: null
@@ -44,7 +44,7 @@ const BathCluster = () => {
 
     function handleOffCanvas() {
 
-        return (showOffCanvas.state) ? <BathInformation show={showOffCanvas.state} handleClose={handleClose} id={showOffCanvas.toilet.id} /> : ""
+        return (showOffCanvas.state) ? <BathInformation show={showOffCanvas.state} handleClose={handleClose} id={showOffCanvas.toilet.id} mapa={props.mapa}/> : ""
     }
 
 

@@ -1,15 +1,42 @@
-import { useState, useEffect } from 'react';
-import { GoogleMap, Marker, DistanceMatrixService, DirectionsService } from '@react-google-maps/api';
+import { useState, useEffect, useRef } from 'react';
+import { GoogleMap, Marker, DistanceMatrixService, DirectionsService, Autocomplete, DirectionsRenderer } from '@react-google-maps/api';
 import './Map.css'
 import BathCluster from './BathCluster/BathCluster';
 import icons from '../../icons/IconsPath'
-export default function Map() {
+import { ButtonGroup, Card, InputGroup,Form, Button } from 'react-bootstrap';
+import BathInformation from './BathInformation/BathInformation';
+/*global google*/
+export default function Map({calculateRoute}) {
     const [gpsData, setGpsData] = useState(
         {
             lat: -33.044726,
             lng: -71.6148218
         }
     );
+
+    const [prub,setPrub] = useState(null)
+    
+  /* const [directionsResponse, setDirectionResponse] = useState(null)
+    const destinationRef = useRef()
+
+    async function calculateRoute(){
+  
+        const directionsService = new google.maps.DirectionsService()
+        const results = await directionsService.route({
+            origin: gpsData,
+            destination: destinationRef.current.value,
+            travelMode: google.maps.TravelMode.WALKING
+        }) 
+        
+        setDirectionResponse(results)
+        console.log(directionsResponse);
+    }
+
+    function clearRoute(){
+        setDirectionResponse(null)
+        destinationRef.current.value = ''
+    } */
+
     useEffect(() => {
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -19,7 +46,6 @@ export default function Map() {
             console.log("Gps no aceptado");
         }
     }, []);
-
 
 
     return (<>
@@ -35,11 +61,9 @@ export default function Map() {
                     strokeWeight: 2
                 }
             }
-
             />
-            <BathCluster />
-
-
+            <BathCluster mapa={setPrub}/>
+            
             <DistanceMatrixService
                 options={{
                     destinations: [gpsData],
@@ -47,12 +71,18 @@ export default function Map() {
                         lat: -34.044726,
                         lng: -71.6148218
                     }],
-                    travelMode: "DRIVING",
+                    travelMode: "WALKING",
                 }}
-                callback={(response) => { console.log(response) }}
+                
             />
-
+            
+        
+            {prub && <DirectionsRenderer directions= {prub} />}
         </GoogleMap>
+               
+
     </>
     )
 }
+
+//{directionsResponse && <DirectionsRenderer directions= {directionsResponse} />}
