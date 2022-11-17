@@ -52,6 +52,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "09:00 a 20:00",
+        address:"Pedro Montt 1845, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -72,6 +74,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "09:00 a 18:00",
+        address: "2685, Pedro Montt 2113, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -82,6 +86,7 @@ async function e(req, res) {
             free: true,
             disability_access: true,
             diaper_changing: true
+        
         }]
     },
     {
@@ -91,6 +96,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "09:00 a 18:00",
+        address:"Molina 468, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -111,6 +118,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "09:00 a 20:30",
+        address:"Av. Argentina 51, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -131,6 +140,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "09:00 a 20:30",
+        address:"Av. Argentina 51, S 2019, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -151,6 +162,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "07:00 a 19:00",
+        address:"Uruguay 125, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -171,6 +184,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "06:00 a 03:00",
+        address:"Blanco 725, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -191,6 +206,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "06:00 a 22:00",
+        address:"Pedro Montt 2860, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -211,6 +228,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "08:00 a 20:00",
+        address:"Gral. Cruz 384-434, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -231,6 +250,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "07:00 a 20:00",
+        address:"Sotomayor 7-39, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -251,6 +272,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "09:00 a 18:00",
+        address:"Muelle Prat s/n, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -271,6 +294,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "11:00 a 20:00",
+        address:"Papudo 525, 2372715 Valparaíso",
 
         reviews: [{
             id: 1,
@@ -291,6 +316,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "10:00 a 18:00",
+        address:"Paseo Muelle Baron, s/n, Valparaíso, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -311,6 +338,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "09:00 a 18:00",
+        address:"Cerro Cárcel 471, cerro Cárcel LOMA, 2do piso Edificio de Difusión, Parque Cultural, 2380138 Valparaíso",
 
         reviews: [{
             id: 1,
@@ -331,6 +360,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
+        horario: "12:00 a 20:00",
+        address:"Condell 1454, 2363127 Valparaíso",
 
         reviews: [{
             id: 1,
@@ -348,9 +379,11 @@ async function e(req, res) {
         id: 16,
         lng: -71.62467,
         lat: -33.04692,
-        free: true,
+        free: false,
         disability_access: true,
         diaper_changing: true,
+        horario: "15:00 a 22:00",
+        address:"Pje. Ecuador 199, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -371,26 +404,8 @@ async function e(req, res) {
         free: true,
         disability_access: true,
         diaper_changing: true,
-
-        reviews: [{
-            id: 1,
-            username: "javier ibáñez",
-            calification: 4,
-            cleaning_calification: 3,
-            privacy_calification: 5,
-            free: true,
-            disability_access: true,
-            diaper_changing: true
-        }]
-
-    },
-    {
-        id: 18,
-        lng: -71.62497,
-        lat: -33.04621,
-        free: true,
-        disability_access: true,
-        diaper_changing: true,
+        horario: "09:00 a 18:00",
+        address:"Av. Ecuador 2-84, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -412,6 +427,8 @@ async function e(req, res) {
             free: true,
             disability_access: true,
             diaper_changing: true,
+            horario: "15:00 a 03:00",
+            address:"Av. Ecuador 102, Valparaíso",
     
             reviews: [{
                 id: 1,
