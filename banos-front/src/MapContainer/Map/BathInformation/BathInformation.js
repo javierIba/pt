@@ -3,13 +3,20 @@ import Spinner from 'react-bootstrap/Spinner';
 import { Offcanvas, Container, Row, Col, Card, Button } from 'react-bootstrap';
 import IconModel from '../../../icons/IconModel'
 import iconOptions from '../../../icons/IconOptions';
+import validateToken from './../../../helpers/auth';
+import { useNavigate } from "react-router-dom";
+import WriteReview from './writeReview/WriteReview';
+
+
 
 export default function BathInformation(props) {
   const show = props.show;
   const handleClose = props.handleClose;
+  const [showWriteReview, setShowWriteReview] = useState(false);
   // const toiletInformation = props.toiletInformation;
   const [toiletInformation, setToiletInformation] = useState(null);
-
+  const [isToken, setIsToken] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     async function getToiletInformation() {
       const data = {
@@ -27,7 +34,13 @@ export default function BathInformation(props) {
       let information = await response.json();
       setToiletInformation(information.doc);
     }
+    async function tokenValidate() {
+      let token = localStorage.getItem('Authorization-Token');
+      let isValidate = await validateToken(token);
+      setIsToken(isValidate);
+    }
     getToiletInformation();
+    tokenValidate();
 
   }, []);
   const offcanvasTittle = "Información";
@@ -60,12 +73,15 @@ export default function BathInformation(props) {
   function calculateYesNo(array) {
     if (Array.isArray(array)) {
       let sum = array.reduce((acc, next) => (next === true) ? acc += 1 : 0, 0);
-      if (sum > (array.length*0.6)){
+      if (sum > (array.length * 0.6)) {
         return true
       }
       return false
     }
   }
+
+
+
   return (
     <>
       {(toiletInformation) ?
@@ -82,8 +98,8 @@ export default function BathInformation(props) {
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">
-                      <h5 className='text-center'>Calificación</h5>
-                      <h5 className='text-center'>{calification(toiletInformation.reviews.map(review => review.calification))}</h5>
+                    <h5 className='text-center'>Calificación</h5>
+                    <h5 className='text-center'>{calification(toiletInformation.reviews.map(review => review.calification))}</h5>
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">
@@ -98,17 +114,17 @@ export default function BathInformation(props) {
                   <br />
                   <Card bg='info' border="secondary">
                     <h5 className='text-center'>Gratis</h5>
-                    <h5 className='text-center'>{(calculateYesNo(toiletInformation.reviews.map(review => review.free))) ? "Si":"No"}</h5>
+                    <h5 className='text-center'>{(calculateYesNo(toiletInformation.reviews.map(review => review.free))) ? "Si" : "No"}</h5>
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">
                     <h5 className='text-center'>Acceso para personas en situación de discapacidad</h5>
-                    <h5 className='text-center'>{(calculateYesNo(toiletInformation.reviews.map(review => review.disability_access))) ? "Si":"No"}</h5>
+                    <h5 className='text-center'>{(calculateYesNo(toiletInformation.reviews.map(review => review.disability_access))) ? "Si" : "No"}</h5>
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">
                     <h5 className='text-center'>Mudador</h5>
-                    <h5 className='text-center'>{(calculateYesNo(toiletInformation.reviews.map(review => review.diaper_changing))) ? "Si":"No"}</h5>
+                    <h5 className='text-center'>{(calculateYesNo(toiletInformation.reviews.map(review => review.diaper_changing))) ? "Si" : "No"}</h5>
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">
@@ -116,28 +132,30 @@ export default function BathInformation(props) {
                     <h5 className='text-center'>{toiletInformation.Horario}</h5>
                   </Card>
                   <br />
-                  <Card bg='info' border="secondary">
-                    <Button variant="secondary">¿Quieres agregar una opinión?</Button>
-                  </Card>
-                  <br />
-                  <Card bg='info' border="secondary">
-                    <Button variant="secondary">Recomienda un baño</Button>
-                  </Card>
-                  
-                  
-                </Col>
-              </Row>
-            </Container>
 
-            <Container>
-              <Row>
-                <Col>
-              <button type="button">
-              Agregar opinion  
-              </button>
+                  {
+                    (isToken) ?
+                      <>
+                        <Card bg='info' border="secondary">
+                          <Button variant="secondary" >¿Quieres agregar una opinión?</Button>
+                        </Card>
+                        <br />
+                        <Card bg='info' border="secondary">
+                          <Button variant="secondary" onClick={() => setShowWriteReview(true)}>Recomienda un baño</Button>
+                        </Card>
+                      </> :
+                      <Card bg='info' border="secondary">
+                        <Button variant="secondary" onClick={() => navigate('/login')}>¿Quieres agregar una opinión? Inicia sesión</Button>
+                      </Card>
+
+                  }
+
                 </Col>
               </Row>
             </Container>
+            {/* {console.log(showWriteReview)} */}
+            <WriteReview show={showWriteReview} close={() => setShowWriteReview(false)} />
+
 
           </Offcanvas.Body>
         </Offcanvas> :

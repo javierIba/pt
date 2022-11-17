@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { GoogleMap, Marker, DistanceMatrixService, DirectionsService } from '@react-google-maps/api';
-import './Map.css'
 import BathCluster from './BathCluster/BathCluster';
-import icons from '../../icons/IconsPath'
+import icons from '../../icons/IconsPath';
+import './Map.css'
+
 export default function Map() {
     const [gpsData, setGpsData] = useState(
         {
@@ -10,6 +11,7 @@ export default function Map() {
             lng: -71.6148218
         }
     );
+  
     useEffect(() => {
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition((position) => {

@@ -13,20 +13,21 @@ async function login(req, res) {
     try {
         let userData = await readDocument(collection, docName);
         if (emailValidation(email) && passwordValidation(password) && (typeof userData != "undefined")) {
-           let isPassword = await compare(password,userData.password);
-           if(isPassword){
-            let accessToken = generateAccessToken(email);
-            res.status(200)
-                .json({
-                    code: 200,
-                    message: "Usuario autenticado exitosamente",
-                    token:accessToken
-                });
-           }else{
-            res.status(400).json({code:400,message:"Usuario o contraseña incorrectos"});
-           }
-            
-        }else {
+            let isPassword = await compare(password, userData.password);
+            if (isPassword) {
+                let accessToken = generateAccessToken(email);
+                res.status(200)
+                    .json({
+                        code: 200,
+                        message: "Usuario autenticado exitosamente",
+                        token: accessToken
+                    });
+                    
+            } else {
+                res.status(400).json({ code: 400, message: "Usuario o contraseña incorrectos" });
+            }
+
+        } else {
             res.status(404).json({ code: 404, message: "El usuario no se encuentra registrado" });
         }
 
@@ -61,7 +62,7 @@ async function signUp(req, res) {
                         message: "Usuario registrado exitosamente",
                         token: accessToken
                     });
-                
+
             } else {
                 res.status(400).json({ code: 400, message: "El usuario ya se encuentra registrado" });
             }
@@ -76,14 +77,21 @@ async function signUp(req, res) {
 
 
 
-
+function tokenValidation(req, res) {
+    
+    try {
+        res.status(200).json({code:200,message:'Token valido',validate:true});
+    } catch (error) {
+        res.status(500).json({code:500,message:"Internal server error"});
+    }
+}
 
 
 
 module.exports = {
     signUp,
     login,
-
+    tokenValidation
 }
 
 

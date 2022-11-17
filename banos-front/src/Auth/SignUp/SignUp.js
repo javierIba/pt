@@ -20,7 +20,7 @@ export default function SignUp() {
         code: null,
         message: null
     });
-
+  
 
     const validationErrorMessage = {
         email: "Email no valido, debe cumplir con el siguiente formato: xxx@xxx.xxx",
@@ -28,6 +28,7 @@ export default function SignUp() {
         name: "Nombre no valido, solo puede contener letras"
     };
 
+    
     const emailRegx = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i;
     const nameRegx = /^[a-zA-Z]+$/;
 
@@ -100,7 +101,7 @@ export default function SignUp() {
                     </div>
 
                     <button >Registrarse</button>
-                    <p className="message">¿Ya estas registrado? <a href="#">Inicia sesión</a></p>
+                    <p className="message">¿Ya estas registrado? <a onClick={()=>navigate('/login')}>Inicia sesión</a></p>
                     <p className={(serverResponse.code === 200) ? "accepted-message" : "error-message"}>{serverResponse.message}</p>
                 </form>
             </div>
