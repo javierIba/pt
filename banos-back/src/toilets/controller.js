@@ -1,6 +1,6 @@
 
 const { readDocument, writeDocument, readAllDocumentsOfCollection } = require('./../services/firebase/firebaseStorage/firebaseStorage');
-
+const { decodeToken } = require('./../helpers/token')
 
 
 async function getAlltoiletLatLng(req, res) {
@@ -42,6 +42,43 @@ async function getToiletByid(req, res) {
         res.status(500).json({ code: 500, message: "internal server error" });
     }
 }
+async function postReview(req, res) {
+    const {
+        id,
+        calification,
+        cleaning_calification,
+        privacy_calification,
+        free,
+        disability_access,
+        diaper_changing,
+        token
+    } = req.body;
+
+    try {
+        let collectionName = 'toilets';
+        let docName = id;
+
+        let data = {
+            calification,
+            cleaning_calification,
+            privacy_calification,
+            free,
+            disability_access,
+            diaper_changing
+        }
+        let doc = await readDocument(collectionName, docName);
+
+        doc.reviews.push(data);
+        await writeDocument(doc,collectionName, docName);
+        res.status(200).json({code:200,message:"Enviado"});
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({code:500,message:"internal server error"});
+    }
+
+
+
+}
 
 
 async function e(req, res) {
@@ -53,7 +90,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "09:00 a 20:00",
-        address:"Pedro Montt 1845, Valparaíso",
+        address: "Pedro Montt 1845, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -86,7 +123,7 @@ async function e(req, res) {
             free: true,
             disability_access: true,
             diaper_changing: true
-        
+
         }]
     },
     {
@@ -97,7 +134,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "09:00 a 18:00",
-        address:"Molina 468, Valparaíso",
+        address: "Molina 468, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -119,7 +156,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "09:00 a 20:30",
-        address:"Av. Argentina 51, Valparaíso",
+        address: "Av. Argentina 51, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -141,7 +178,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "09:00 a 20:30",
-        address:"Av. Argentina 51, S 2019, Valparaíso",
+        address: "Av. Argentina 51, S 2019, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -163,7 +200,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "07:00 a 19:00",
-        address:"Uruguay 125, Valparaíso",
+        address: "Uruguay 125, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -185,7 +222,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "06:00 a 03:00",
-        address:"Blanco 725, Valparaíso",
+        address: "Blanco 725, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -207,7 +244,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "06:00 a 22:00",
-        address:"Pedro Montt 2860, Valparaíso",
+        address: "Pedro Montt 2860, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -229,7 +266,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "08:00 a 20:00",
-        address:"Gral. Cruz 384-434, Valparaíso",
+        address: "Gral. Cruz 384-434, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -251,7 +288,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "07:00 a 20:00",
-        address:"Sotomayor 7-39, Valparaíso",
+        address: "Sotomayor 7-39, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -273,7 +310,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "09:00 a 18:00",
-        address:"Muelle Prat s/n, Valparaíso",
+        address: "Muelle Prat s/n, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -295,7 +332,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "11:00 a 20:00",
-        address:"Papudo 525, 2372715 Valparaíso",
+        address: "Papudo 525, 2372715 Valparaíso",
 
         reviews: [{
             id: 1,
@@ -317,7 +354,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "10:00 a 18:00",
-        address:"Paseo Muelle Baron, s/n, Valparaíso, Valparaíso",
+        address: "Paseo Muelle Baron, s/n, Valparaíso, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -339,7 +376,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "09:00 a 18:00",
-        address:"Cerro Cárcel 471, cerro Cárcel LOMA, 2do piso Edificio de Difusión, Parque Cultural, 2380138 Valparaíso",
+        address: "Cerro Cárcel 471, cerro Cárcel LOMA, 2do piso Edificio de Difusión, Parque Cultural, 2380138 Valparaíso",
 
         reviews: [{
             id: 1,
@@ -361,7 +398,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "12:00 a 20:00",
-        address:"Condell 1454, 2363127 Valparaíso",
+        address: "Condell 1454, 2363127 Valparaíso",
 
         reviews: [{
             id: 1,
@@ -383,7 +420,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "15:00 a 22:00",
-        address:"Pje. Ecuador 199, Valparaíso",
+        address: "Pje. Ecuador 199, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -405,7 +442,7 @@ async function e(req, res) {
         disability_access: true,
         diaper_changing: true,
         horario: "09:00 a 18:00",
-        address:"Av. Ecuador 2-84, Valparaíso",
+        address: "Av. Ecuador 2-84, Valparaíso",
 
         reviews: [{
             id: 1,
@@ -428,8 +465,8 @@ async function e(req, res) {
             disability_access: true,
             diaper_changing: true,
             horario: "15:00 a 03:00",
-            address:"Av. Ecuador 102, Valparaíso",
-    
+            address: "Av. Ecuador 102, Valparaíso",
+
             reviews: [{
                 id: 1,
                 username: "javier ibáñez",
@@ -440,7 +477,7 @@ async function e(req, res) {
                 disability_access: true,
                 diaper_changing: true
             }]
-    
+
         }
         for (i = 0; i < toiletExample.length; i++) {
             let toilet = toiletExample[i];
@@ -450,11 +487,11 @@ async function e(req, res) {
             await writeDocument(toilet, "toilets", `baño${i}`);
 
         }
-        res.status(200).json({x:"enviado"})
+        res.status(200).json({ x: "enviado" })
     } catch (error) {
-        res.status(500).json({x:"dsa{dska"})
+        res.status(500).json({ x: "dsa{dska" })
     }
-   
+
 
 
 
@@ -465,5 +502,6 @@ module.exports = {
     getAllToilets,
     getAlltoiletLatLng,
     getToiletByid,
-    e
+    e,
+    postReview
 }

@@ -2,30 +2,48 @@ import './starReview.css'
 import { useState } from 'react'
 import IconModel from '../../icons/IconModel'
 import iconOptions from '../../icons/IconOptions';
-export default function StarsReview(props) {
-    const [starNumber, setStarNumber] = useState(1);
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
+import StarIcon from '@mui/icons-material/Star';
 
-    function starHandle(starValue) {
-        let starValueMin = 1;
-        let starValueMax = 5;
-        if (starValue > starValueMin && starValue < starValueMax) {
-            props.handleStars(starValue);
-        }
-    }
+const labels = {
+    // 0.5: 'Useless',
+    1: 'Malo',
+    // 1.5: 'Poor',
+    2: 'Regular',
+    // 2.5: 'Ok',
+    3: 'Bueno',
+    // 3.5: 'Good',
+    4: 'Muy bueno',
+    // 4.5: 'Excellent',
+    5: 'Excelente',
+  };
+function getLabelText(value) {
+    return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+}
+export default function StarsReview(props) {
+    let value = props.value;
+
+    // const [value, setValue] = useState(2);
+    const [hover, setHover] = useState(-1);
     return (<>
-        <div>
-            <p className="clasificacion">
-                <input id="radio1" type="radio" name="estrellas" value="5" onClick={(e) => starHandle(e.target.value)} />
-                <label htmlFor="radio1">★</label>
-                <input id="radio2" type="radio" name="estrellas" value="4" onClick={(e) => starHandle(e.target.value)} />
-                <label htmlFor="radio2">★</label>
-                <input id="radio3" type="radio" name="estrellas" value="3" onClick={(e) => starHandle(e.target.value)} />
-                <label htmlFor="radio3">★</label>
-                <input id="radio4" type="radio" name="estrellas" value="2" onClick={(e) => starHandle(e.target.value)} />
-                <label htmlFor="radio4">★</label>
-                <input id="radio5" type="radio" name="estrellas" value="1" onClick={(e) => starHandle(e.target.value)} />
-                <label htmlFor="radio5">★</label>
-            </p>
-        </div>
+        <Rating
+            name="hover-feedback"
+            value={value}
+            precision={1}
+            getLabelText={getLabelText}
+            onChange={(event, newValue) => {
+                // setValue(newValue);
+                props.handleStars(newValue);;
+            }}
+            onChangeActive={(event, newHover) => {
+                setHover(newHover);
+            }}
+            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+        />
+        {value !== null && (
+            <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+        )}
+      
     </>)
 }

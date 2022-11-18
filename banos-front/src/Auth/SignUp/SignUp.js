@@ -81,6 +81,7 @@ export default function SignUp() {
         <div className="login-page">
 
             <div className="form">
+            
                 <form className="register-form" onSubmit={(e) => handleForm(e)}>
                     <div >
                         <label className="input-label" htmlFor="signupName">Nombre</label>

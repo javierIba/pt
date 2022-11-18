@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import WriteReview from './writeReview/WriteReview';
 
 
-import {DirectionsRenderer, DirectionsService} from '@react-google-maps/api';
+import { DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import Map from '../Map';
 /*global google*/
 
@@ -16,47 +16,49 @@ export default function BathInformation(props) {
   const show = props.show;
   const handleClose = props.handleClose;
   const [showWriteReview, setShowWriteReview] = useState(false);
+
   // const toiletInformation = props.toiletInformation;
   const [toiletInformation, setToiletInformation] = useState(null);
   const [isToken, setIsToken] = useState(false);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
+
   //Funciones PARA LA RUTA
 
   const [gpsData, setGpsData] = useState('Brasil 2241, 2362807 Valparaíso');
 
   useEffect(() => {
     if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            setGpsData({ lat: position.coords.latitude, lng: position.coords.longitude });
-        });
+      navigator.geolocation.getCurrentPosition((position) => {
+        setGpsData({ lat: position.coords.latitude, lng: position.coords.longitude });
+      });
     } else {
-        console.log("Gps no aceptado");
+      console.log("Gps no aceptado");
     }
   }, []);
 
 
 
-  const [directionsResponse, setDirectionResponse] = useState(null) 
+  const [directionsResponse, setDirectionResponse] = useState(null)
 
-  
-  async function calculateRoute(){
-  
+
+  async function calculateRoute() {
+
     const directionsService = new google.maps.DirectionsService()
     const results = await directionsService.route({
-        origin: gpsData,
-        destination: toiletInformation.address,
-        travelMode: google.maps.TravelMode.WALKING
-    }) 
-    
+      origin: gpsData,
+      destination: toiletInformation.address,
+      travelMode: google.maps.TravelMode.WALKING
+    })
+
     props.mapa(results)
 
     console.log(results);
-}
+  }
 
-/* function clearRoute(destino){
-    setDirectionResponse(null)
-    destino = ''
-}*/
+  /* function clearRoute(destino){
+      setDirectionResponse(null)
+      destino = ''
+  }*/
 
   //TERMINA FUNCIONES PARA LA RUTA
 
@@ -181,7 +183,7 @@ export default function BathInformation(props) {
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">
-                    <Button variant="secondary" onClick={()=> calculateRoute(toiletInformation.address)}>Mostar ruta</Button>
+                    <Button variant="secondary" onClick={() => calculateRoute(toiletInformation.address)}>Mostar ruta</Button>
                   </Card>
                   <br />
 
@@ -189,11 +191,11 @@ export default function BathInformation(props) {
                     (isToken) ?
                       <>
                         <Card bg='info' border="secondary">
-                          <Button variant="secondary" >¿Quieres agregar una opinión?</Button>
+                          <Button variant="secondary" onClick={() => setShowWriteReview(true)}>¿Quieres agregar una opinión?</Button>
                         </Card>
                         <br />
                         <Card bg='info' border="secondary">
-                          <Button variant="secondary" onClick={() => setShowWriteReview(true)}>Recomienda un baño</Button>
+                          <Button variant="secondary" >Recomienda un baño</Button>
                         </Card>
                       </> :
                       <Card bg='info' border="secondary">
@@ -206,7 +208,7 @@ export default function BathInformation(props) {
               </Row>
             </Container>
             {/* {console.log(showWriteReview)} */}
-            <WriteReview show={showWriteReview} close={() => setShowWriteReview(false)} />
+            <WriteReview show={showWriteReview} close={() => setShowWriteReview(false)} id={props.id}/>
 
 
           </Offcanvas.Body>
@@ -218,9 +220,9 @@ export default function BathInformation(props) {
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           </Offcanvas.Body>
-        
+
         </Offcanvas>
-        
+
       }
 
     </>
