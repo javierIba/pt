@@ -32,7 +32,7 @@ const BathCluster = (props) => {
             
         let ce = (toilet)?toilet.cerrado.split(':'):[]
         let ap = (toilet)?toilet.cerrado.split(':'):[]
-        if(ce[0] > today.getHours()   ){
+        if(ce[0] < today.getHours()   ){
             option.fillColor = "green"
             
         }else if(today.getHours >= "00" && ce[0] < "05" ){

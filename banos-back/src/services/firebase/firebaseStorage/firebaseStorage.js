@@ -22,6 +22,9 @@ async function writeDocument(doc, collection, docName, subCollecion, subDoc) {
 
     await document.set(doc);
 }
+async function writeDocumentWithoutId(doc, collection) {
+    await firestore.collection(collection).add(doc);
+}
 async function setDocument(collection, docName, doc) {
     const document = firestore.doc(`${collection}/${docName}`);
     if (isJson(doc)) {
@@ -62,5 +65,6 @@ async function deleteDocument(collection, docName, doc) {
 module.exports = {
     writeDocument,
     readDocument,
-    readAllDocumentsOfCollection
+    readAllDocumentsOfCollection,
+    writeDocumentWithoutId
 }

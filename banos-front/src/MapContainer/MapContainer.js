@@ -7,7 +7,7 @@ import Map from "./Map/Map";
 const MapContainer = () => {
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.REACT_APP_API_KEY_GOOGLE_MAPS,
-        libraries: ['places']
+        libraries: ["places"],
     })
 
 

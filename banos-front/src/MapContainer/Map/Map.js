@@ -17,26 +17,7 @@ export default function Map() {
 
     const [prub,setPrub] = useState(null)
     
-  /* const [directionsResponse, setDirectionResponse] = useState(null)
-    const destinationRef = useRef()
-
-    async function calculateRoute(){
-  
-        const directionsService = new google.maps.DirectionsService()
-        const results = await directionsService.route({
-            origin: gpsData,
-            destination: destinationRef.current.value,
-            travelMode: google.maps.TravelMode.WALKING
-        }) 
-        
-        setDirectionResponse(results)
-        console.log(directionsResponse);
-    }
-
-    function clearRoute(){
-        setDirectionResponse(null)
-        destinationRef.current.value = ''
-    } */
+ 
 
   
     useEffect(() => {

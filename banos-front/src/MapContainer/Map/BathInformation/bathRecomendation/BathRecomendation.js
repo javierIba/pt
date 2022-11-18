@@ -1,5 +1,3 @@
-
-import { Autocomplete } from '@react-google-maps/api';
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import StarsReview from '../../../../icons/starsReview/StarsReview';
@@ -8,52 +6,66 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-
-
-export default function WriteReview(props) {
+import TextField from '@mui/material/TextField';
+import { moment } from '@date-io/moment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+export default function BathRecomendation(props) {
     const [formData, setFormData] = useState({
         calification: 0,
         cleaning_calification: 0,
         privacy_calification: 0,
         free: false,
         disability_access: false,
-        diaper_changing: false
+        diaper_changing: false,
+        address: "",
+        apertura: '00:00',
+        cierre: '00:00'
     })
 
-    /*aqui va el fetch */
-    const handleForm = async() => {
+
+    const handleForm = async () => {
         let data = formData;
-        let AuthorizationToken = localStorage.getItem('Authorization-Token');
-        data['AuthorizationToken'] = AuthorizationToken;
-        data['id'] = props.id
-        let response = await fetch('http://localhost:8080/toilets/postreview',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
+        data['AuthorizationToken'] = localStorage.getItem('Authorization-Token');
+        let reponse = await fetch('http://localhost:8080/toiletrecomendation/toiletAdd', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         });
-        let dataResponse = await response.json();
+        let dataReponse = await reponse.json();
         props.close();
-     }
-
+    }
 
     return (
         <>
-
-
             <Modal show={props.show} onHide={props.close}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Cuentanos tu experencia</Modal.Title>
+                    <Modal.Title>Recomienda un baño</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {/* <Autocomplete>
-                        <input type="text" id="pac-input" />
-                    </Autocomplete> */}
                     <div className="login-page">
 
-                        <div >
-                            <form  >
+                        <div>
+                            <form>
+                                <div>
+                                    <TextField name="Direccion" label="Dirección del baño" variant="outlined" onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
+                                </div>
+                                <div>
+                                    <label>Horario de apertura</label>
+                                    <div>
+                                        <input type="time" id="appt" name="appt"
+                                            min="09:00" max="18:00" required onChange={(e) => setFormData({ ...formData, apertura: e.target.value })} />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label>Horario de cierre</label>
+                                    <div>
+                                        <input type="time" id="appt" name="appt"
+                                            min="09:00" max="18:00" required onChange={(e) => setFormData({ ...formData, cierre: e.target.value })} />
+                                    </div>
+                                </div>
                                 <div >
                                     <label className="input-label" htmlFor="signupName">¿Qué calificación le darias?</label>
                                     {/* <input type="text" placeholder="Nombre" id="signupName" name="name" onChange={(e) => handleInputsForm(e)} onClick={() => setIsClick({ ...isClick, name: true })} required /> */}
@@ -121,17 +133,15 @@ export default function WriteReview(props) {
                                     </RadioGroup>
                                 </div>
                                 <Button variant="contained" endIcon={<SendIcon />} onClick={handleForm}>
-                                    Recomendar
+                                    Recomendar baño
                                 </Button>
                             </form>
                         </div>
                     </div>
 
                 </Modal.Body>
-                
-            </Modal>
-        </>
-    );
 
+            </Modal >
 
+        </>)
 }

@@ -6,17 +6,18 @@ import iconOptions from '../../../icons/IconOptions';
 import validateToken from './../../../helpers/auth';
 import { useNavigate } from "react-router-dom";
 import WriteReview from './writeReview/WriteReview';
-
-
 import { DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import Map from '../Map';
-/*global google*/
 
+import BathRecomendation from './bathRecomendation/BathRecomendation';
+
+
+/*global google*/
 export default function BathInformation(props) {
   const show = props.show;
   const handleClose = props.handleClose;
   const [showWriteReview, setShowWriteReview] = useState(false);
-
+  const [showBathRecomendation, setShowBathRecomendation] = useState(false);
   // const toiletInformation = props.toiletInformation;
   const [toiletInformation, setToiletInformation] = useState(null);
   const [isToken, setIsToken] = useState(false);
@@ -42,6 +43,7 @@ export default function BathInformation(props) {
 
 
   async function calculateRoute() {
+    // eslint-disable-next-line no-undef
 
     const directionsService = new google.maps.DirectionsService()
     const results = await directionsService.route({
@@ -195,7 +197,7 @@ export default function BathInformation(props) {
                         </Card>
                         <br />
                         <Card bg='info' border="secondary">
-                          <Button variant="secondary" >Recomienda un baño</Button>
+                          <Button variant="secondary" onClick={() => setShowBathRecomendation(true)}>Recomienda un baño</Button>
                         </Card>
                       </> :
                       <Card bg='info' border="secondary">
@@ -208,8 +210,8 @@ export default function BathInformation(props) {
               </Row>
             </Container>
             {/* {console.log(showWriteReview)} */}
-            <WriteReview show={showWriteReview} close={() => setShowWriteReview(false)} id={props.id}/>
-
+            <WriteReview show={showWriteReview} close={() => setShowWriteReview(false)} id={props.id} />
+            <BathRecomendation show={showBathRecomendation} close={() => setShowBathRecomendation(false)} />
 
           </Offcanvas.Body>
         </Offcanvas> :
