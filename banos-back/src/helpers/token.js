@@ -17,10 +17,13 @@ function validateToken(req, res, next) {
             next();
         }
     })
-
+}
+function decodeToken(token){
+    return jwt.decode(token);
 }
 
 module.exports = {
     generateAccessToken,
-    validateToken
+    validateToken,
+    decodeToken
 }

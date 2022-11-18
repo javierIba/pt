@@ -1,55 +1,42 @@
 
 import { Autocomplete } from '@react-google-maps/api';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import StarsReview from '../../../../icons/starsReview/StarsReview';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+
 
 export default function WriteReview(props) {
     const [formData, setFormData] = useState({
-        calification: 1,
-        cleaning_calification: 1,
-        privacy_calification: 1
+        calification: 0,
+        cleaning_calification: 0,
+        privacy_calification: 0,
+        free: false,
+        disability_access: false,
+        diaper_changing: false
     })
-    const [isClick, setIsClick] = useState({});
 
-    const handleForm = () => { }
-
-    function handleInputsForm(e) {
-        // switch (e.target.name) {
-        //     case "calification":
-        //         setFormData({ ...formData, calification: e.target.value });
-        //         break;
-        //     case "cleaning":
-        //         setFormData({ ...formData, cleaning_calification: e.target.value });
-        //         break;
-        //     case "privacy":
-        //         setFormData({ ...formData, privacy_calification: e.target.value });
-        //         break;
-
-        // }
-    }
-
-
-    // const center = { lat: 50.064192, lng: -130.605469 };
-    // const defaultBounds = {
-    //     north: center.lat + 0.1,
-    //     south: center.lat - 0.1,
-    //     east: center.lng + 0.1,
-    //     west: center.lng - 0.1,
-    // };
-
-    // const options = {
-    //     bounds: defaultBounds,
-    //     componentRestrictions: { country: "us" },
-    //     fields: ["address_components", "geometry", "icon", "name"],
-    //     strictBounds: false,
-    //     types: ["establishment"],
-    // };
-
-
-    // // eslint-disable-next-line no-undef
-    // const autocomplete = new google.maps.places.Autocomplete(input, options);
+    /*aqui va el fetch */
+    const handleForm = async() => {
+        let data = formData;
+        let AuthorizationToken = localStorage.getItem('Authorization-Token');
+        data['AuthorizationToken'] = AuthorizationToken;
+        data['id'] = props.id
+        let response = await fetch('http://localhost:8080/toilets/postreview',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        let dataResponse = await response.json();
+        console.log(dataResponse);
+        props.close();
+     }
 
 
     return (
@@ -58,7 +45,7 @@ export default function WriteReview(props) {
 
             <Modal show={props.show} onHide={props.close}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Recomienda un baño</Modal.Title>
+                    <Modal.Title>Cuentanos tu experencia</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {/* <Autocomplete>
@@ -67,51 +54,83 @@ export default function WriteReview(props) {
                     <div className="login-page">
 
                         <div className="form">
-                            <form className="register-form" onSubmit={(e) => handleForm(e)}>
+                            <form className="register-form" >
                                 <div >
-                                    <label className="input-label" htmlFor="signupName">Calificación</label>
+                                    <label className="input-label" htmlFor="signupName">¿Qué calificación le darias?</label>
                                     {/* <input type="text" placeholder="Nombre" id="signupName" name="name" onChange={(e) => handleInputsForm(e)} onClick={() => setIsClick({ ...isClick, name: true })} required /> */}
                                     {/* {(nameValidation) && <p className="error-message">{validationErrorMessage.name}</p>} */}
-                                    <StarsReview handleStars={(x) => setFormData({ ...formData, calification: x })} name={"califitation"}/>
-                           
+                                    <div>
+                                        <StarsReview handleStars={(x) => setFormData({ ...formData, calification: x })} value={formData.calification} />
+                                    </div>
 
-                                   </div>
+                                </div>
                                 <div >
-                                    <label className="input-label" htmlFor="signupName">Limpieza</label>
+                                    <label className="input-label" htmlFor="signupName">¿Qué calificación le darias a la limpieza?</label>
                                     {/* <input type="text" placeholder="Nombre" id="signupName" name="name" onChange={(e) => handleInputsForm(e)} onClick={() => setIsClick({ ...isClick, name: true })} required /> */}
                                     {/* {(nameValidation) && <p className="error-message">{validationErrorMessage.name}</p>} */}
-                                    <StarsReview handleStars={(x) => setFormData({ ...formData, cleaning_calification: x })} />
+                                    <div>
+                                        <StarsReview handleStars={(x) => setFormData({ ...formData, cleaning_calification: x })} value={formData.cleaning_calification} />
+                                    </div>
                                     {console.log(formData)}
 
                                 </div>
-                                <div>
-                                    <label className="input-label" htmlFor="signupPassword">Contraseña</label>
-                                    <input type="password" placeholder="Contraseña" id="signupPassword" name="password" onChange={(e) => handleInputsForm(e)} onClick={() => setIsClick({ ...isClick, password: true })} required />
-                                    {/* {(passwordValidation) && <p className="error-message">{validationErrorMessage.password}</p>} */}
+
+                                <div >
+                                    <label className="input-label" htmlFor="signupName">¿Qué calificación le darias a la limpieza</label>
+                                    {/* <input type="text" placeholder="Nombre" id="signupName" name="name" onChange={(e) => handleInputsForm(e)} onClick={() => setIsClick({ ...isClick, name: true })} required /> */}
+                                    {/* {(nameValidation) && <p className="error-message">{validationErrorMessage.name}</p>} */}
+                                    <div>
+                                        <StarsReview handleStars={(x) => setFormData({ ...formData, privacy_calification: x })} value={formData.privacy_calification} />
+                                    </div>
 
                                 </div>
+
                                 <div>
-                                    <label className="input-label" htmlFor="signupEmail">Email</label>
-                                    <input type="email" placeholder="Email" id="signupEmail" name="email" onChange={(e) => handleInputsForm(e)} onClick={() => setIsClick({ ...isClick, email: true })} required />
-                                    {/* {(emailValidation) && <p className="error-message">{validationErrorMessage.email}</p>} */}
+                                    <label className="input-label" htmlFor="signupName">¿Es gratis?</label>
+                                    <RadioGroup
+                                        aria-labelledby="demo-controlled-radio-buttons-group"
+                                        name="controlled-radio-buttons-group"
+                                        value={formData.free}
+                                        onChange={(e) => setFormData({ ...formData, free: (e.target.value === 'true') ? true : false })}
+                                    >
+                                        <FormControlLabel value="true" control={<Radio />} label="Si" />
+                                        <FormControlLabel value="false" control={<Radio />} label="No" />
+                                    </RadioGroup>
+                                </div>
+                                <div>
+                                    <label className="input-label" htmlFor="signupName">¿Cuenta con acceso para personas en situación de discapacidad?</label>
+                                    <RadioGroup
+                                        aria-labelledby="demo-controlled-radio-buttons-group"
+                                        name="controlled-radio-buttons-group"
+                                        value={formData.disability_access}
+                                        onChange={(e) => setFormData({ ...formData, disability_access: (e.target.value === 'true') ? true : false })}
+                                    >
+                                        <FormControlLabel value="true" control={<Radio />} label="Si" />
+                                        <FormControlLabel value="false" control={<Radio />} label="No" />
+                                    </RadioGroup>
                                 </div>
 
-                                {/* <button >Registrarse</button>
-                                <p className="message">¿Ya estas registrado? <a onClick={() => navigate('/login')}>Inicia sesión</a></p> */}
-                                {/* <p className={(serverResponse.code === 200) ? "accepted-message" : "error-message"}>{serverResponse.message}</p> */}
+                                <div>
+                                    <label className="input-label" htmlFor="signupName">¿Cuenta con mudador?</label>
+                                    <RadioGroup
+                                        aria-labelledby="demo-controlled-radio-buttons-group"
+                                        name="controlled-radio-buttons-group"
+                                        value={formData.diaper_changing}
+                                        onChange={(e) => setFormData({ ...formData, diaper_changing: (e.target.value === 'true') ? true : false })}
+                                    >
+                                        <FormControlLabel value="true" control={<Radio />} label="Si" />
+                                        <FormControlLabel value="false" control={<Radio />} label="No" />
+                                    </RadioGroup>
+                                </div>
+                                <Button variant="contained" endIcon={<SendIcon />} onClick={handleForm}>
+                                    Recomendar
+                                </Button>
                             </form>
                         </div>
                     </div>
 
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={props.close}>
-                        Close
-                    </Button>
-                    <Button variant="primary" >
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
+                
             </Modal>
         </>
     );

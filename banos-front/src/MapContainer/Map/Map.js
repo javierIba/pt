@@ -7,7 +7,7 @@ import './Map.css'
 import { ButtonGroup, Card, InputGroup,Form, Button } from 'react-bootstrap';
 import BathInformation from './BathInformation/BathInformation';
 /*global google*/
-export default function Map({calculateRoute}) {
+export default function Map() {
     const [gpsData, setGpsData] = useState(
         {
             lat: -33.044570036934864,
