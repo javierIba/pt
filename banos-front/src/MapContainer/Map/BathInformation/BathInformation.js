@@ -199,10 +199,16 @@ export default function BathInformation(props) {
                         <Card bg='info' border="secondary">
                           <Button variant="secondary" onClick={() => setShowBathRecomendation(true)}>Recomienda un baño</Button>
                         </Card>
+                        <br/>
+                        <Card bg='info' border="secondary">
+                          <Button variant="secondary" onClick={() => {localStorage.removeItem('Authorization-Token');window.location.reload()}}>Cerrar sesión</Button>
+                        </Card>
+                        
                       </> :
                       <Card bg='info' border="secondary">
                         <Button variant="secondary" onClick={() => navigate('/login')}>¿Quieres agregar una opinión? Inicia sesión</Button>
                       </Card>
+                       
 
                   }
 
