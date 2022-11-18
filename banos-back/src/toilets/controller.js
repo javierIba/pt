@@ -9,7 +9,7 @@ async function getAlltoiletLatLng(req, res) {
         let collection = await readAllDocumentsOfCollection(collectionName);
 
         let latLngToiletCollection = collection.reduce((toiletsLetLng, next) => {
-            toiletsLetLng.push({ id: next.id, lat: next.lat, lng: next.lng });
+            toiletsLetLng.push({ id: next.id, lat: next.lat, lng: next.lng, cerrado: next.cerrado, apertura:next.apertura });
             return toiletsLetLng
         }, []);
 

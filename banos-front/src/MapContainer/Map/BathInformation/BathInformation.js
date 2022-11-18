@@ -177,7 +177,7 @@ export default function BathInformation(props) {
                   <br />
                   <Card bg='info' border="secondary">
                     <h5 className='text-center'>Horario</h5>
-                    <h5 className='text-center'>{toiletInformation.horario}</h5>
+                    <h5 className='text-center'>{`${toiletInformation.apertura} a ${toiletInformation.cerrado}`}</h5>
                   </Card>
                   <br />
                   <Card bg='info' border="secondary">

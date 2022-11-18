@@ -1,6 +1,7 @@
 import { MarkerClusterer, Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import icons from '../../../icons/IconsPath'
+import IconModel from "../../../icons/IconModel";
 import { Offcanvas, Button } from 'react-bootstrap';
 import iconOptions from "../../../icons/IconOptions";
 import { Loader } from '@googlemaps/js-api-loader';
@@ -13,6 +14,35 @@ const BathCluster = (props) => {
         toilet: null
     });
     const [toilets, setToilets] = useState(null);
+
+
+    
+    let today = new Date()
+    let actualDay = today.getDay()
+    let hour = new Date('1/1/1999 ' + `${today.getHours()}:${today.getMinutes()}`);
+
+    function comprobarHora(toilet){
+        let option  = {path: icons.iconBath,
+          fillColor: "yellow",
+          fillOpacity: 0.9,
+          scale: 0.1,
+          strokeColor: "black",
+          strokeWeight: 2}
+        
+            
+        let ce = (toilet)?toilet.cerrado.split(':'):[]
+        let ap = (toilet)?toilet.cerrado.split(':'):[]
+        if(ce[0] > today.getHours()   ){
+            option.fillColor = "green"
+            
+        }else if(today.getHours >= "00" && ce[0] < "05" ){
+            option.fillColor = "green"
+        }else{
+            option.fillColor = "red"
+        }
+        return option
+      }
+
 
     useEffect(() => {
         async function drawToilets() {
@@ -39,7 +69,7 @@ const BathCluster = (props) => {
         })
     }
 
-    const options = iconOptions.iconBath;
+    
     const toiletCollection = (toilets) ? toilets.latLngToiletCollection : [{}];
 
     function handleOffCanvas() {
@@ -54,11 +84,13 @@ const BathCluster = (props) => {
         <>
             <MarkerClusterer >
                 {clusterer =>
-                    toiletCollection.map(toilet => (
+                    toiletCollection.map(toilet =>{ 
+                        let options = (toilets != null)?comprobarHora(toilet):iconOptions.iconBath;
+                        return (
                         <>
-                            <Marker key={createKey(toilet.lat, toilet.lng)} position={{ lat: toilet.lat, lng: toilet.lng }} animation={window.google.maps.Animation.BOUNCE} clusterer={clusterer} icon={options} onClick={() => handleShow(toilet)} />
+                            <Marker key={createKey(toilet.lat, toilet.lng)} position={{ lat: toilet.lat, lng: toilet.lng }}  clusterer={clusterer} icon={options} onClick={() => handleShow(toilet)} />
                         </>
-                    )
+                    )}
                     )
                 }
 
