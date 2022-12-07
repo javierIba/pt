@@ -1,19 +1,21 @@
-import MapContainer from "./MapContainer/MapContainer";
-import Login from './Auth/Login/Login';
-import SignUp from './Auth/SignUp/SignUp';
+import MapContainer from './pages/MapContainer/MapContainer';
+import Login from './pages/Auth/Login/Login';
+import SignUp from './pages/Auth/Signup/SignUp';
+
+
+import Admin from './pages/Admin/Admin/Admin'
+import ToiletRecomendation from './pages/Admin/ToiletRecomendation/ToiletRecomendation';
+import ToiletAdmin from './pages/Admin/ToiletAdmin/ToiletAdmin';
+import Recovery from './pages/Auth/recovery/Recovery'
+import SendEmail from "./pages/Auth/recovery/SendEmail";
+
 import {
     BrowserRouter as Router,
     Routes,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
-import StarsReview from './icons/starsReview/StarsReview';
-import Admin from './admin/Admin';
-import { useState } from 'react';
-import ToiletRecomendation from "./admin/ToiletRecomendation/ToiletRecomendation";
-import ToiletAdmin from "./admin/ToiletAdmin/ToiletAdmin";
-import Recuperar from "./Auth/Recuperar/Recuperar";
-import SendEmail from "./Auth/Recuperar/SendEmail";
+import ToiletView from './pages/Admin/toiletView/ToiletView';
+
 export default function Rooutes() {
 
     let admin = localStorage.getItem('A');
@@ -29,12 +31,13 @@ export default function Rooutes() {
                                 <Route path='/admin' element={<Admin />} />
                                 <Route path="/toiletrecomendation" element={<ToiletRecomendation />} />
                                 <Route path="/toiletadmin" element={<ToiletAdmin />} />
+                                <Route path='/toiletview' element={<ToiletView/>}/>
                             </>}
 
                         <Route path='/' element={<MapContainer />} />
                         <Route path='/login' element={<Login />} />
                         <Route path='/signup' element={<SignUp />} />
-                        <Route path="/recuperar/:email" element={<Recuperar />} />
+                        <Route path="/recuperar/:email" element={<Recovery />} />
                         <Route path="/recsendemail" element={<SendEmail />} />
 
                     </Routes>

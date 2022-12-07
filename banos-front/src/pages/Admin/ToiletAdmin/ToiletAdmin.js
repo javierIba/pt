@@ -1,17 +1,18 @@
-import NavbarAdmin from "../NavbarAdmin";
+import NavbarAdmin from "../../../components/NavbarAdmin/NavbarAdmin";
 import { Container, Row, Col } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react'
 
 
 
-import StarsReview from '../../icons/starsReview/StarsReview';
+import StarsReview from '../../../icons/starsReview/StarsReview';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
+import ToiletView from "../toiletView/ToiletView";
 
 export default function ToiletAdmin() {
     const [show, setShow] = useState(false);
@@ -19,7 +20,7 @@ export default function ToiletAdmin() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-   
+
 
     const [formData, setFormData] = useState({
         calification: 0,
@@ -31,8 +32,8 @@ export default function ToiletAdmin() {
         address: "",
         apertura: '00:00',
         cierre: '00:00',
-        lat:0,
-        lng:0
+        lat: 0,
+        lng: 0
     })
 
 
@@ -97,7 +98,7 @@ export default function ToiletAdmin() {
                                         min="09:00" max="18:00" required onChange={(e) => setFormData({ ...formData, cerrado: e.target.value })} />
                                 </div>
                             </div>
-                            
+
                             <div >
                                 <label className="input-label" htmlFor="signupName">¿Qué calificación le darias?</label>
                                 {/* <input type="text" placeholder="Nombre" id="signupName" name="name" onChange={(e) => handleInputsForm(e)} onClick={() => setIsClick({ ...isClick, name: true })} required /> */}
@@ -172,7 +173,11 @@ export default function ToiletAdmin() {
                 </div>
 
             </Modal.Body>
-            
+
         </Modal>
+        <div>
+            <ToiletView />
+        </div>
+
     </>)
 }

@@ -16,6 +16,7 @@ export default function NavbarAdmin(){
                     <Nav className="me-auto">
                         <Nav.Link onClick={()=>navigate('/toiletrecomendation')}>Propuestas de baños</Nav.Link>
                         <Nav.Link onClick={()=>navigate('/toiletadmin')}>Baños</Nav.Link>
+          
                     </Nav>
                 </Navbar.Collapse>
             </Container>

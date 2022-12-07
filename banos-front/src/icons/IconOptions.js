@@ -22,6 +22,14 @@ const iconOptions = {
         fill: "gold",
         width: '30px',
         height: '30px'
+    },
+    iconArrow:{
+        path: icons.iconArrow,
+        fillColor: "gold",
+        fillOpacity: 0.9,
+        scale: 0.1,
+        strokeColor: "blue",
+        strokeWeight: 2
     }
 }
 

@@ -1,11 +1,10 @@
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button,Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
 
 import Modal from 'react-bootstrap/Modal';
 import { useState, useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
 
-import NavbarAdmin from '../NavbarAdmin';
+import NavbarAdmin from '../../../components/NavbarAdmin/NavbarAdmin';
 
 export default function ToiletRecomendation() {
     const [collection, setCollection] = useState([]);

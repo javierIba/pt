@@ -24,10 +24,10 @@ function getLabelText(value) {
 export default function StarsReview(props) {
     let value = props.value;
 
-    // const [value, setValue] = useState(2);
+   
     const [hover, setHover] = useState(-1);
     return (<>
-        <Rating
+        <Rating 
             name="hover-feedback"
             value={value}
             precision={1}

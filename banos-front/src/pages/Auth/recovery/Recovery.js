@@ -1,10 +1,9 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
 
-export default function Recuperar() {
+export default function Recovery() {
     const [password, setPassword] = useState('');
-    const [error,setError] = useState('');
+    const [error, setError] = useState('');
 
     const params = useParams();
     const navigate = useNavigate();
@@ -25,14 +24,14 @@ export default function Recuperar() {
         let reponseData = await reponse.json();
         if (reponseData.code === 200) {
             navigate('/login');
-        }else{
+        } else {
             setError(reponseData.message);
         }
     }
 
 
     return (<>
-    
+
         <div className="login-page">
             <div className="form">
                 <div>
