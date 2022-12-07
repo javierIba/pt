@@ -1,12 +1,19 @@
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import { calification, calculateYesNo, averageRange } from './../../../helpers/calification'
-import Modal from 'react-bootstrap/Modal';
 import { useState, useEffect } from 'react';
 
 import NavbarAdmin from '../../../components/NavbarAdmin/NavbarAdmin';
 export default function ToiletView() {
     const [toilets, setToilets] = useState([]);
+    const [show, setShow] = useState(false);
+    const [horario,setHorario] = useState({
+        apertura:'',
+        cerrado:'',
+        id:''
+    })
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     useEffect(() => {
         getAllToilets()
@@ -21,20 +28,18 @@ export default function ToiletView() {
             console.error("Se ha producido un error en la solicitud");
         }
     }
-    async function changeHour(apertura, cerrado, id) {
-        let data = {
-            apertura,
-            cerrado,
-            id
-        }
+    async function changeHour() {
+        
         let reponse = await fetch('http://localhost:8080/toilets/houredit', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(horario)
         })
         let reponseData = await reponse.json();
+        await getAllToilets()
+        handleClose()
     }
     function showToiletRecomendation() {
         return toilets.map((toilet) =>
@@ -69,7 +74,10 @@ export default function ToiletView() {
                             <p>   ¿Es gratis?: {(toilet.free) ? "Si" : "No"}</p>
                         </div>
                         <div>
-                            <Button variant="primary" >
+                            <Button variant="primary" onClick={()=>{
+                                handleShow();
+                                setHorario({...horario,id:toilet.id})
+                                }} >
                                 Editar horario
                             </Button>
                         </div>
@@ -89,7 +97,27 @@ export default function ToiletView() {
                 {showToiletRecomendation()}
             </Row>
         </Container>
-        {console.log(toilets)}
+
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Cambiar horario</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <h2>Horario de apertura</h2>
+                <input type="time" onChange={(e)=>setHorario({...horario,apertura:e.target.value})}/>
+                <h2>Horario de cierre</h2>
+                <input type="time" onChange={(e)=>setHorario({...horario,cerrado:e.target.value})}/>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    cerrar
+                </Button>
+                <Button variant="primary" onClick={changeHour}>
+                    Guardar cambios
+                </Button>
+            </Modal.Footer>
+        </Modal>
+
 
 
     </>)
