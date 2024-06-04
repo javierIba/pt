@@ -18,7 +18,6 @@ import ToiletView from './pages/Admin/toiletView/ToiletView';
 
 export default function Rooutes() {
 
-    let admin = localStorage.getItem('A');
 
     return (
         <>
